@@ -13,37 +13,32 @@ import io.netty.buffer.ByteBuf;
 public class GotQuotesRibbonClientImpl implements GotQuotesRibbonClient {
 
     private final HttpResourceGroup httpResourceGroup;
-    private final HttpRequestTemplate<ByteBuf> gotQuotesTemplate;
+    private final HttpRequestTemplate<ByteBuf> dilbertTemplate;
+    private final HttpRequestTemplate<ByteBuf> garfiledTemplate;
 
     public GotQuotesRibbonClientImpl() {
 
         // Creation of the client balancer
         // ClientOptions properties are set using the ones defined in AppServer.properties
-        httpResourceGroup = Ribbon.createHttpResourceGroup("got-quotes-service-client");
+        httpResourceGroup = Ribbon.createHttpResourceGroup("got-dilbert-service-client");
 
-        // Client endpoint definition
-        gotQuotesTemplate = httpResourceGroup.newTemplateBuilder("gotQuotesTemplate", ByteBuf.class)
+
+        garfiledTemplate = httpResourceGroup.newTemplateBuilder("garfiledTemplate", ByteBuf.class)
                 .withMethod("GET")
-                .withUriTemplate("/api/quote/{action}")
+                .withUriTemplate("/api/garfield/{date}")
+                .withFallbackProvider(new GotQuotesFallbackHandler()).build();
+
+        dilbertTemplate = httpResourceGroup.newTemplateBuilder("dilbertTemplate", ByteBuf.class)
+                .withMethod("GET")
+                .withUriTemplate("/api/dilbert/{date}")
                 .withFallbackProvider(new GotQuotesFallbackHandler()).build();
     }
 
-    public RibbonRequest<ByteBuf> triggerGetQuote(String quoteId) {
-        return gotQuotesTemplate.requestBuilder()
-                        .withRequestProperty("action", quoteId)
-                        .build();
-    }
 
-    public RibbonRequest<ByteBuf> triggerGetRandomQuote() {
-        return gotQuotesTemplate.requestBuilder()
-                        .withRequestProperty("action", "random")
-                        .build();
-    }
-
-    public RibbonRequest<ByteBuf>  triggerGetTopQuote() {
-        return gotQuotesTemplate.requestBuilder()
-                        .withRequestProperty("action", "top")
-                        .build();
+    public RibbonRequest<ByteBuf>  triggerGetCartoon() {
+        return dilbertTemplate.requestBuilder()
+                .withRequestProperty("date", "2015-09-05")
+                .build();
     }
 }
 

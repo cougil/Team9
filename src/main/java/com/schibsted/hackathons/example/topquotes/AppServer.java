@@ -5,7 +5,6 @@ import com.netflix.governator.annotations.Modules;
 import com.schibsted.hackathons.example.topquotes.common.LoggingInterceptor;
 import com.schibsted.hackathons.example.topquotes.common.auth.AuthenticationService;
 import com.schibsted.hackathons.example.topquotes.common.health.HealthCheck;
-import com.schibsted.hackathons.example.topquotes.endpoints.TopQuotesController;
 import com.schibsted.hackathons.example.topquotes.ribbon.GotQuotesRibbonClient;
 import com.schibsted.hackathons.example.topquotes.common.auth.AuthenticationServiceImpl;
 import com.schibsted.hackathons.example.topquotes.ribbon.GotQuotesRibbonClientImpl;

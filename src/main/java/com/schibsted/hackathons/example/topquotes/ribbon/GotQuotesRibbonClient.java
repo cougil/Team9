@@ -12,11 +12,7 @@ import io.netty.buffer.ByteBuf;
  */
 public interface GotQuotesRibbonClient {
 
-    public RibbonRequest<ByteBuf> triggerGetQuote(String quoteId);
-
-    public RibbonRequest<ByteBuf> triggerGetRandomQuote();
-
-    public RibbonRequest<ByteBuf>  triggerGetTopQuote();
+    RibbonRequest<ByteBuf>  triggerGetCartoon();
 }
 
 

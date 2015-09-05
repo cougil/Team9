@@ -25,15 +25,17 @@ import java.nio.charset.Charset;
  */
 @Singleton
 @Endpoint
-public class TopQuotesController {
+public class CartoonController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TopQuotesController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CartoonController.class);
     private GotQuotesRibbonClient gotQuotesRibbonClient = null;
 
     @Inject
-    public TopQuotesController(GotQuotesRibbonClient gotQuotesRibbonClient) {
+    public CartoonController(GotQuotesRibbonClient gotQuotesRibbonClient) {
         this.gotQuotesRibbonClient = gotQuotesRibbonClient;
     }
+
+
 
     // This endpoint shouldn't be removed since will be always needed
     // Healthcheck endpoint needed by Asgard to validate the service is working
@@ -56,9 +58,10 @@ public class TopQuotesController {
     }
 
 
-    @Path(value = "/api/quote/trending", method = HttpMethod.GET)
-    public Observable<Void> getQuote(HttpServerRequest<ByteBuf> request, HttpServerResponse<ByteBuf> response) {
-        return gotQuotesRibbonClient.triggerGetTopQuote()
+
+    @Path(value = "/api/cartoon/", method = HttpMethod.GET)
+    public Observable<Void> getCartoon(HttpServerRequest<ByteBuf> request, HttpServerResponse<ByteBuf> response) {
+        return gotQuotesRibbonClient.triggerGetCartoon()
                 .toObservable()
                 .flatMap(originContent -> {
                     response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
@@ -66,8 +69,7 @@ public class TopQuotesController {
                     try {
                         JSONObject content = new JSONObject(originContent.toString(Charset.defaultCharset()));
                         JSONObject resultContent = new JSONObject();
-                        resultContent.put("trend_quote", content.get("quote"));
-                        resultContent.put("counter", content.get("counter"));
+                        resultContent.put("img", content.get("img"));
                         return response.writeAndFlush(resultContent.toString(), StringTransformer.DEFAULT_INSTANCE);
                     } catch (JSONException e) {
                         return response.writeAndFlush("{\"error\": \"No trending quote yet!\"}",
@@ -75,5 +77,6 @@ public class TopQuotesController {
                     }
                 })
                 .doOnCompleted(() -> response.close(true));
-                }
+    }
+
 }
