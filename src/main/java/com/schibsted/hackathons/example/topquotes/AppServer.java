@@ -33,7 +33,6 @@ public interface AppServer {
 
         static final int DEFAULT_PORT = 8080;
         static final int DEFAULT_THREADS = 50;
-
         private static final Logger LOGGER = LoggerFactory.getLogger(KaryonRestRouterModuleImpl.class);
 
         public KaryonRestRouterModuleImpl() {
