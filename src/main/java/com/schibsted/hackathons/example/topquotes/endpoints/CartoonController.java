@@ -59,7 +59,7 @@ public class CartoonController {
 
 
 
-    @Path(value = "/api/cartoon/", method = HttpMethod.GET)
+    @Path(value = "/api/cartoon", method = HttpMethod.GET)
     public Observable<Void> getCartoon(HttpServerRequest<ByteBuf> request, HttpServerResponse<ByteBuf> response) {
         return gotQuotesRibbonClient.triggerGetCartoon()
                 .toObservable()
