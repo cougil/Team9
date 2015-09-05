@@ -53,7 +53,7 @@ public class CartoonController {
     public Observable<Void> status(HttpServerRequest<ByteBuf> request, HttpServerResponse<ByteBuf> response) {
         response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
         response.setStatus(HttpResponseStatus.OK);
-        response.write("Eureka!", StringTransformer.DEFAULT_INSTANCE);
+        response.write("Eureka new!", StringTransformer.DEFAULT_INSTANCE);
         return response.close();
     }
 
