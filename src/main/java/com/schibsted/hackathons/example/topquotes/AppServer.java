@@ -5,6 +5,7 @@ import com.netflix.governator.annotations.Modules;
 import com.schibsted.hackathons.example.topquotes.common.LoggingInterceptor;
 import com.schibsted.hackathons.example.topquotes.common.auth.AuthenticationService;
 import com.schibsted.hackathons.example.topquotes.common.health.HealthCheck;
+import com.schibsted.hackathons.example.topquotes.endpoints.CartoonController;
 import com.schibsted.hackathons.example.topquotes.ribbon.GotQuotesRibbonClient;
 import com.schibsted.hackathons.example.topquotes.common.auth.AuthenticationServiceImpl;
 import com.schibsted.hackathons.example.topquotes.ribbon.GotQuotesRibbonClientImpl;
@@ -49,7 +50,7 @@ public interface AppServer {
             bind(GotQuotesRibbonClient.class).to(GotQuotesRibbonClientImpl.class);
             bind(AuthenticationService.class).to(AuthenticationServiceImpl.class);
             interceptorSupport().forUri("/*").intercept(LoggingInterceptor.class);
-            bind(TopQuotesController.class).asEagerSingleton();
+            bind(CartoonController.class).asEagerSingleton();
             super.configure();
         }
     }
