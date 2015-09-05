@@ -6,9 +6,9 @@ import com.schibsted.hackathons.example.topquotes.common.LoggingInterceptor;
 import com.schibsted.hackathons.example.topquotes.common.auth.AuthenticationService;
 import com.schibsted.hackathons.example.topquotes.common.health.HealthCheck;
 import com.schibsted.hackathons.example.topquotes.endpoints.CartoonController;
-import com.schibsted.hackathons.example.topquotes.ribbon.GotQuotesRibbonClient;
+import com.schibsted.hackathons.example.topquotes.ribbon.GotCartoonRibbonClient;
 import com.schibsted.hackathons.example.topquotes.common.auth.AuthenticationServiceImpl;
-import com.schibsted.hackathons.example.topquotes.ribbon.GotQuotesRibbonClientImpl;
+import com.schibsted.hackathons.example.topquotes.ribbon.GotDilbertRibbonClientImpl;
 import netflix.adminresources.resources.KaryonWebAdminModule;
 import netflix.karyon.KaryonBootstrap;
 import netflix.karyon.ShutdownModule;
@@ -46,7 +46,7 @@ public interface AppServer {
 
         @Override
         public void configure() {
-            bind(GotQuotesRibbonClient.class).to(GotQuotesRibbonClientImpl.class);
+            bind(GotCartoonRibbonClient.class).to(GotDilbertRibbonClientImpl.class);
             bind(AuthenticationService.class).to(AuthenticationServiceImpl.class);
             interceptorSupport().forUri("/*").intercept(LoggingInterceptor.class);
             bind(CartoonController.class).asEagerSingleton();

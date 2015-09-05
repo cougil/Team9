@@ -2,7 +2,10 @@ package com.schibsted.hackathons.example.topquotes.endpoints;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.schibsted.hackathons.example.topquotes.ribbon.GotQuotesRibbonClient;
+import com.netflix.ribbon.RibbonRequest;
+import com.schibsted.hackathons.example.topquotes.ribbon.GotCartoonRibbonClient;
+import com.schibsted.hackathons.example.topquotes.ribbon.GotDilbertRibbonClientImpl;
+import com.schibsted.hackathons.example.topquotes.ribbon.GotGarfieldRibbonClientImpl;
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.reactivex.netty.channel.StringTransformer;
@@ -28,12 +31,14 @@ import java.nio.charset.Charset;
 public class CartoonController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CartoonController.class);
-    private GotQuotesRibbonClient gotQuotesRibbonClient = null;
+    private GotCartoonRibbonClient gotCartoonRibbonClient = null;
 
+/*
     @Inject
-    public CartoonController(GotQuotesRibbonClient gotQuotesRibbonClient) {
-        this.gotQuotesRibbonClient = gotQuotesRibbonClient;
+    public CartoonController(GotCartoonRibbonClient gotCartoonRibbonClient) {
+        this.gotCartoonRibbonClient = gotCartoonRibbonClient;
     }
+*/
 
 
 
@@ -61,7 +66,16 @@ public class CartoonController {
 
     @Path(value = "/api/cartoon", method = HttpMethod.GET)
     public Observable<Void> getCartoon(HttpServerRequest<ByteBuf> request, HttpServerResponse<ByteBuf> response) {
-        return gotQuotesRibbonClient.triggerGetCartoon()
+        double value = Math.random();
+
+        GotCartoonRibbonClient client;
+        if (value > 0.5d) {
+            gotCartoonRibbonClient = new GotDilbertRibbonClientImpl();
+        } else {
+            gotCartoonRibbonClient = new GotGarfieldRibbonClientImpl();
+        }
+
+        return gotCartoonRibbonClient.triggerGetCartoon()
                 .toObservable()
                 .flatMap(originContent -> {
                     response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");

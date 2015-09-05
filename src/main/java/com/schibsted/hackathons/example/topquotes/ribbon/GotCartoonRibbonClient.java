@@ -10,7 +10,7 @@ import io.netty.buffer.ByteBuf;
  * Ribbon client which creates the client balancer,
  * specify the endpoint from the remote service to be accessed and wraps the calls to that service.
  */
-public interface GotQuotesRibbonClient {
+public interface GotCartoonRibbonClient {
 
     RibbonRequest<ByteBuf>  triggerGetCartoon();
 }

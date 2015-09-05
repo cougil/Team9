@@ -10,23 +10,16 @@ import io.netty.buffer.ByteBuf;
  * Ribbon client which creates the client balancer,
  * specify the endpoint from the remote service to be accessed and wraps the calls to that service.
  */
-public class GotQuotesRibbonClientImpl implements GotQuotesRibbonClient {
+public class GotDilbertRibbonClientImpl implements GotCartoonRibbonClient {
 
     private final HttpResourceGroup httpResourceGroup;
     private final HttpRequestTemplate<ByteBuf> dilbertTemplate;
-    private final HttpRequestTemplate<ByteBuf> garfiledTemplate;
 
-    public GotQuotesRibbonClientImpl() {
+    public GotDilbertRibbonClientImpl() {
 
         // Creation of the client balancer
         // ClientOptions properties are set using the ones defined in AppServer.properties
         httpResourceGroup = Ribbon.createHttpResourceGroup("got-dilbert-service-client");
-
-
-        garfiledTemplate = httpResourceGroup.newTemplateBuilder("garfiledTemplate", ByteBuf.class)
-                .withMethod("GET")
-                .withUriTemplate("/api/garfield/{date}")
-                .withFallbackProvider(new GotQuotesFallbackHandler()).build();
 
         dilbertTemplate = httpResourceGroup.newTemplateBuilder("dilbertTemplate", ByteBuf.class)
                 .withMethod("GET")
